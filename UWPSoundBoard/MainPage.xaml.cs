@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using UWPSoundBoard.Model;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -22,9 +24,47 @@ namespace UWPSoundBoard
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private ObservableCollection<Sound> Sounds;
+
+        private List<MenuItem> MenuItems;
+
         public MainPage()
         {
             this.InitializeComponent();
+
+            Sounds = new ObservableCollection<Sound>();
+            SoundManager.GetAllSounds(Sounds);
+
+            MenuItems = new List<MenuItem>();
+            MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/animals.png", Category = SoundCategory.Animals });
+            MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/cartoon.png", Category = SoundCategory.Cartoons });
+            MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/taunt.png", Category = SoundCategory.Taunts });
+            MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/warning.png", Category = SoundCategory.Warnings });
+        }
+
+        private void HamburgerButton_Click(object sender, RoutedEventArgs e) {
+            MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
+
+        }
+
+        private void MenuItemsListView_ItemClick(object sender, ItemClickEventArgs e) {
+            var menuItem = e.ClickedItem as MenuItem;
+
+            // filter on category
+            CategoryTextBlock.Text = menuItem.Category.ToString();
+            SoundManager.GetSoundsByCategory(Sounds, menuItem.Category);
+        }
+
+        private void SoundGridView_ItemClick(object sender, ItemClickEventArgs e) {
+            var sound = e.ClickedItem as Sound;
+            SoundMediaElement.Source = new Uri(this.BaseUri, sound.AudioFile);
         }
     }
 }

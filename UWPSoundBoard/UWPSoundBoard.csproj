@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{b95eb35c-e6b1-49f0-b43d-d9c7b7c1d571}</ProjectGuid>
+    <ProjectGuid>{B95EB35C-E6B1-49F0-B43D-D9C7B7C1D571}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UWPSoundBoard</RootNamespace>
@@ -16,9 +16,7 @@
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    
     <PackageCertificateKeyFile>UWPSoundBoard_TemporaryKey.pfx</PackageCertificateKeyFile>
-    
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -100,17 +98,51 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\MenuItem.cs" />
+    <Compile Include="Model\Sound.cs" />
+    <Compile Include="Model\SoundManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    
     <None Include="UWPSoundBoard_TemporaryKey.pfx" />
-    
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Audio\Animals\Cat.wav" />
+    <Content Include="Assets\Audio\Animals\Cow.wav" />
+    <Content Include="Assets\Audio\Cartoons\Gun.wav" />
+    <Content Include="Assets\Audio\Cartoons\Spring.wav" />
+    <Content Include="Assets\Audio\Taunts\Clock.wav" />
+    <Content Include="Assets\Audio\Taunts\LOL.wav" />
+    <Content Include="Assets\Audio\Warnings\Ship.wav" />
+    <Content Include="Assets\Audio\Warnings\Siren.wav" />
+    <Content Include="Assets\Icons\animals.png" />
+    <Content Include="Assets\Icons\cartoon.png" />
+    <Content Include="Assets\Icons\taunt.png" />
+    <Content Include="Assets\Icons\warning.png" />
+    <Content Include="Assets\Images\Animals\Cat.png" />
+    <Content Include="Assets\Images\Animals\Cow.png" />
+    <Content Include="Assets\Images\Cartoons\Gun.png" />
+    <Content Include="Assets\Images\Cartoons\Spring.png" />
+    <Content Include="Assets\Images\Taunts\Clock.png" />
+    <Content Include="Assets\Images\Taunts\LOL.png" />
+    <Content Include="Assets\Images\Warnings\Ship.png" />
+    <Content Include="Assets\Images\Warnings\Siren.png" />
+    <Content Include="Assets\PackageAppXManifest\1240x1240.png" />
+    <Content Include="Assets\PackageAppXManifest\1240x600.png" />
+    <Content Include="Assets\PackageAppXManifest\24x24-large.png" />
+    <Content Include="Assets\PackageAppXManifest\24x24.png" />
+    <Content Include="Assets\PackageAppXManifest\300x300.png" />
+    <Content Include="Assets\PackageAppXManifest\310x310.png" />
+    <Content Include="Assets\PackageAppXManifest\50x50-large.png" />
+    <Content Include="Assets\PackageAppXManifest\50x50.png" />
+    <Content Include="Assets\PackageAppXManifest\620x300.png" />
+    <Content Include="Assets\PackageAppXManifest\71x71-large.png" />
+    <Content Include="Assets\PackageAppXManifest\71x71.png" />
+    <Content Include="Assets\PackageAppXManifest\88x88-large.png" />
+    <Content Include="Assets\PackageAppXManifest\88x88.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -130,11 +162,9 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
-
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
