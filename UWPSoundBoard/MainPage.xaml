@@ -17,7 +17,7 @@
         <RelativePanel>
             <Button Name="HamburgerButton" RelativePanel.AlignLeftWithPanel="True" Click="HamburgerButton_Click" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Height="45" Width="45" FontSize="20"/>
             <Button Name="BackButton" RelativePanel.RightOf="HamburgerButton" Margin="10,0,0,0" Click="BackButton_Click" FontFamily="Segoe MDL2 Assets" Content="&#xE0A6;" Height="45" Width="45" FontSize="20"/>
-            <AutoSuggestBox Name="SearchBox" PlaceholderText="Search For Sounds" Width="200" QueryIcon="Find" QuerySubmitted="SearchBox_QuerySubmitted" RelativePanel.AlignRightWithPanel="True" Margin="0,5,10,0" />
+            <AutoSuggestBox Name="SearchBox" PlaceholderText="Search For Sounds" Width="200" QueryIcon="Find" QuerySubmitted="SearchBox_QuerySubmitted" TextChanged="SearchBox_TextChanged" RelativePanel.AlignRightWithPanel="True" Margin="0,5,10,0" />
         </RelativePanel>
 
         <SplitView Name="MainSplitView" DisplayMode="CompactOverlay"  CompactPaneLength="45" OpenPaneLength="200" Grid.Row="1">
