@@ -68,8 +68,10 @@ namespace UWPSoundBoard
             if (Sounds.Count == 0) {
                 SoundManager.GetAllSounds(Sounds);
             }
-            Suggestions = Sounds.Where(p => p.Name.StartsWith(sender.Text)).Select(p => p.Name).ToList();
-            SearchBox.ItemsSource = Suggestions;
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput) {
+                Suggestions = Sounds.Where(p => p.Name.StartsWith(sender.Text)).Select(p => p.Name).ToList();
+                SearchBox.ItemsSource = Suggestions;
+            }
         }
 
         private void MenuItemsListView_ItemClick(object sender, ItemClickEventArgs e) {
