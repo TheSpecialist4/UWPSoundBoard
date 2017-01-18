@@ -5,8 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UWPSoundBoard.Model;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -40,6 +42,8 @@ namespace UWPSoundBoard
             MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/cartoon.png", Category = SoundCategory.Cartoons });
             MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/taunt.png", Category = SoundCategory.Taunts });
             MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/warning.png", Category = SoundCategory.Warnings });
+
+            BackButton.Visibility = Visibility.Collapsed;
         }
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e) {
@@ -47,7 +51,10 @@ namespace UWPSoundBoard
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e) {
-
+            SoundManager.GetAllSounds(Sounds);
+            MenuItemsListView.SelectedItem = null;
+            CategoryTextBlock.Text = "All Sounds";
+            BackButton.Visibility = Visibility.Collapsed;
         }
 
         private void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
@@ -60,11 +67,43 @@ namespace UWPSoundBoard
             // filter on category
             CategoryTextBlock.Text = menuItem.Category.ToString();
             SoundManager.GetSoundsByCategory(Sounds, menuItem.Category);
+
+            BackButton.Visibility = Visibility.Visible;
+            MainSplitView.IsPaneOpen = false;
         }
 
         private void SoundGridView_ItemClick(object sender, ItemClickEventArgs e) {
             var sound = e.ClickedItem as Sound;
             SoundMediaElement.Source = new Uri(this.BaseUri, sound.AudioFile);
+        }
+
+        private async void SoundGridView_Drop(object sender, DragEventArgs e) {
+            if (e.DataView.Contains(StandardDataFormats.StorageItems)) {
+                var items = await e.DataView.GetStorageItemsAsync();
+
+                if (items.Any()) {
+                    var storageFile = items[0] as StorageFile;
+                    var contentType = storageFile.ContentType;
+
+                    var folder = ApplicationData.Current.LocalFolder;
+
+                    if (contentType == "audio/wav" || contentType == "audio/mpeg") {
+                        var newFile = await storageFile.CopyAsync(folder, storageFile.Name);
+
+                        SoundMediaElement.SetSource(await storageFile.OpenAsync(FileAccessMode.Read), contentType);
+                        SoundMediaElement.Play();
+                    }
+                }
+            }
+        }
+
+        private void SoundGridView_DragOver(object sender, DragEventArgs e) {
+            e.AcceptedOperation = DataPackageOperation.Copy;
+
+            e.DragUIOverride.Caption = "Drag and drop to play this sound";
+            e.DragUIOverride.IsCaptionVisible = true;
+            e.DragUIOverride.IsContentVisible = true;
+            e.DragUIOverride.IsGlyphVisible = true;
         }
     }
 }
